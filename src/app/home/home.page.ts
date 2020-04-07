@@ -16,19 +16,14 @@ export class HomePage implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.settings = this.router.getCurrentNavigation().extras.state.settings;
-        console.log("home constructor")
-        console.log(this.settings);
       }
     });
   }
 
   ngOnInit() {
-    console.log("settings");
-    console.log(this.settings);
   }
 
   gotoGame(){
-    console.log(this.settings)
     this.router.navigate(['game'], {state: {settings: this.settings}});
   }
 

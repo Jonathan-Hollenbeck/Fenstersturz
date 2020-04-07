@@ -1,9 +1,65 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>game</ion-title>
+    <ion-title>
+      <ion-button (click)="gotoHome()"><</ion-button>
+      Round {{roundCounter}}<span *ngIf="settings.maxRounds != -1">/{{settings.maxRounds}}</span>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-grid text-center>
+    <ion-row class="lighter-blue-bg normal-font">
+      <ion-col *ngFor="let party of partys;">
+        Team {{party.teamNumber+1}} <br /> <div class="biggerfont">{{party.points}}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="biggest-font darker-blue-bg">
+      <ion-col>
+        Team {{currentTeam}} am Zug
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+
+<ion-footer no-border>
+  <div text-center class="big-font">
+    {{currentWord}}
+    <p>
+      <img class="prestype-image" *ngIf="roundCounter != 0"
+        src="{{'../../assets/images/' + currentPresentationtype + '.png'}}">
+    </p>
+  </div>
+  <div *ngIf="time > 0" text-center class="red-bg biggest-font">
+    Zeit {{time}}
+  </div>
+  <ion-row *ngIf="time > 0 && showWordsResetButton == false && skipCounter != settings.rerolls
+    || time > 0 && showWordsResetButton == false">
+    <ion-col>
+      <button *ngIf="time > 0 && showWordsResetButton == false && skipCounter != settings.rerolls"
+        ion-button block large icon-only (click)="skipWord(randomNumber(0,2))">
+        <ion-icon name="thumbs-down"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button *ngIf="time > 0 && showWordsResetButton == false"
+        ion-button block large icon-only color="secondary" (click)="correct()">
+        <ion-icon name="thumbs-up"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="time == 0 || showWordsResetButton == true">
+    <ion-col>
+      <button *ngIf="time == 0" ion-button block large (click)="startRound()">
+        Start
+      </button>
+    </ion-col>
+    <ion-col>
+      <button *ngIf="showWordsResetButton == true"
+        ion-button block large icon-only (click)="resetWords()">
+        <ion-icon name="infinite"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

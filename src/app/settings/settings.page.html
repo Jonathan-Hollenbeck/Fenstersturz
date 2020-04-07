@@ -14,14 +14,17 @@
     <ion-input [(ngModel)]="settings.partynumber" type="number" placeholder="default: 2"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Rerolls</ion-label>
-    <ion-input [(ngModel)]="settings.rerolls" type="number" placeholder="default: 1"></ion-input>
+    <p>
+      <ion-label>Rerolls</ion-label>
+      <ion-input [(ngModel)]="settings.rerolls" type="number" placeholder="default: 1"></ion-input>
+    </p>
+    set to ''-1' for infinite
   </ion-item>
   <ion-item>
     <p>
       <ion-label>max. Roundnumber</ion-label>
       <ion-input [(ngModel)]="settings.maxRounds" type="number" placeholder="default: infinite"></ion-input>
     </p>
-    set to "-1" for infinite
+    set to ''-1' for infinite
   </ion-item>
 </ion-content>
