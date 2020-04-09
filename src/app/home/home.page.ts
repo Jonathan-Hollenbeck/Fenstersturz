@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
   }
 
   gotoSettings(){
-    this.router.navigate(['settings'])
+    this.router.navigate(['settings'], {state: {settings: this.settings}})
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 import { Settings } from '../settings/settings.page'
 
@@ -29,34 +30,32 @@ export class GamePage implements OnInit {
   currentTeam: number = 1;
 
   partys: party[];
-  wordsSave: words = require('../../assets/json/wordstest.json');
+  wordsSave: any = require('../../assets/json/wordstest.json');
   words: words = null;
+  skipCounter: number = 0;
 
   currentPresentationtype: string = '';
   currentWord: string = '';
 
   showWordsResetButton: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private alertCtrl: AlertController, private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.settings = this.router.getCurrentNavigation().extras.state.settings;
+      console.log(this.settings);
       this.partys = new Array(this.settings.partynumber);
       for(let i:number = 0; i < this.partys.length; i++){
         this.partys[i] = {teamNumber:i, points:0};
       }
       this.resetWords();
-      this.maxRounds = this.settings.maxRounds;
     });
   }
 
   ngOnInit() {
   }
-
+  
   gotoHome(){
-    this.router.navigate(['home']);
-  }
-
-  ionViewDidLoad(){
+    this.router.navigate(["home"], {state: {settings: this.settings}});
   }
 
   resetWords(){
@@ -85,10 +84,10 @@ export class GamePage implements OnInit {
         this.timerTick();
       }
       else {
-        if(this.currentTeam == this.partynumber && this.roundCounter == this.maxRounds){
+        if(this.currentTeam == this.settings.partynumber && this.roundCounter == this.settings.maxRounds){
           this.victoryAlert();
         }
-        if(this.currentTeam == this.partynumber){
+        if(this.currentTeam == this.settings.partynumber){
           this.currentTeam = 1;
         }
         else {
@@ -194,7 +193,7 @@ export class GamePage implements OnInit {
     return random;
   }
 
-  victoryAlert(){
+  async victoryAlert(){
     let winnerTeams: party[] = [{teamNumber: 0, points: -1}];
     for(let party of this.partys){
       if(party.points >= winnerTeams[0].points){
@@ -204,9 +203,10 @@ export class GamePage implements OnInit {
         winnerTeams.push(party);
       }
     }
+
     let message: string = 'Team ' + (winnerTeams[0].teamNumber+1) +
      ' hat mit ' + winnerTeams[0].points + ' Punkt/en in ' +
-      this.maxRounds + ' Runden gewonnen! Herzlichen Glückwunsch.';
+      this.settings.maxRounds + ' Runden gewonnen! Herzlichen Glückwunsch.';
     let title: string = 'Gewonnen!'
     if(winnerTeams.length > 1){
       title = 'Unentschieden!'
@@ -215,27 +215,29 @@ export class GamePage implements OnInit {
         teamNumbers += (team.teamNumber+1) + ' ';
       }
       message = ' Die Teams: ' + teamNumbers + ' haben alle ' +
-       winnerTeams[0].points + ' Punkte in ' + this.maxRounds + ' Runden erreicht!'
+       winnerTeams[0].points + ' Punkte in ' + this.settings.maxRounds + ' Runden erreicht!'
     }
-    let alert = this.alertCtrl.create({
-      title: title,
+
+    const alert = await this.alertCtrl.create({
+      header: title,
       message: message,
       buttons: [
       {
         text: 'Weiter spielen',
         role: 'cancel',
         handler: () => {
-          this.maxRounds = -1;
+          this.settings.maxRounds = -1;
         }
       },
       {
         text: 'Beenden',
         handler: () => {
-          this.navCtrl.popToRoot()
+          this.router.navigate(['home']);
         }
       }
     ]
     });
-    alert.present();
+
+    await alert.present();
   }
 }

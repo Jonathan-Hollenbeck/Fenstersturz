@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export interface Settings{
   time: number;
@@ -19,7 +19,13 @@ export class SettingsPage implements OnInit {
 
   settings: Settings = {time: 60, partynumber: 2, rerolls: 1, maxRounds: -1};
 
-  constructor(private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.settings = this.router.getCurrentNavigation().extras.state.settings;
+      }
+    });
+  }
 
   ngOnInit() {
   }
