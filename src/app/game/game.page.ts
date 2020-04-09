@@ -42,7 +42,6 @@ export class GamePage implements OnInit {
   constructor(private alertCtrl: AlertController, private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.settings = this.router.getCurrentNavigation().extras.state.settings;
-      console.log(this.settings);
       this.partys = new Array(this.settings.partynumber);
       for(let i:number = 0; i < this.partys.length; i++){
         this.partys[i] = {teamNumber:i, points:0};
@@ -53,7 +52,7 @@ export class GamePage implements OnInit {
 
   ngOnInit() {
   }
-  
+
   gotoHome(){
     this.router.navigate(["home"], {state: {settings: this.settings}});
   }
@@ -80,6 +79,14 @@ export class GamePage implements OnInit {
   timerTick(){
     setTimeout(() => {
       this.time--;
+      if(this.time == 10){
+        var tenSecLeftAudio = new Audio("../../assets/audio/10secleft.wav");
+        tenSecLeftAudio.play();
+      }
+      if(this.time == 0){
+        var tenSecLeftAudio = new Audio("../../assets/audio/timesup.wav");
+        tenSecLeftAudio.play();
+      }
       if (this.time > 0) {
         this.timerTick();
       }

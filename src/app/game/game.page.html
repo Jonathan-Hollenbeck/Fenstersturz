@@ -38,24 +38,24 @@
   </div>
   <ion-row *ngIf="time > 0 && showWordsResetButton == false && skipCounter != settings.rerolls
     || time > 0 && showWordsResetButton == false">
-    <ion-col>
+    <ion-col><!-- reroll -->
       <ion-button expand="block" *ngIf="time > 0 && showWordsResetButton == false && skipCounter != settings.rerolls" (click)="skipWord(randomNumber(0,2))">
         <ion-icon name="thumbs-down"></ion-icon>
       </ion-button>
     </ion-col>
-    <ion-col>
+    <ion-col><!-- right answer -->
       <ion-button color="success" expand="block" *ngIf="time > 0 && showWordsResetButton == false" (click)="correct()">
         <ion-icon name="thumbs-up"></ion-icon>
       </ion-button>
     </ion-col>
   </ion-row>
   <ion-row *ngIf="time == 0 || showWordsResetButton == true">
-    <ion-col>
+    <ion-col><!-- Start button -->
       <ion-button expand="block" *ngIf="time == 0" (click)="startRound()">
         Start
       </ion-button>
     </ion-col>
-    <ion-col>
+    <ion-col><!--reset words button -->
       <ion-button expand="block" *ngIf="showWordsResetButton == true" (click)="resetWords()">
         <ion-icon name="infinite"></ion-icon>
       </ion-button>
