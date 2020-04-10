@@ -87,8 +87,8 @@ export class GamePage implements OnInit {
         tenSecLeftAudio.play();
       }
       if(this.time == 0){
-        var tenSecLeftAudio = new Audio("../../assets/audio/timesup.wav");
-        tenSecLeftAudio.play();
+        var timesupAudio = new Audio("../../assets/audio/timesup.wav");
+        timesupAudio.play();
       }
       if (this.time > 0) {
         this.timerTick();

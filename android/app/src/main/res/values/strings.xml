@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Fenstersturz</string>
+    <string name="title_activity_main">Fenstersturz</string>
+    <string name="package_name">hollenbeck.jonathan.fenstersturz</string>
+    <string name="custom_url_scheme">hollenbeck.jonathan.fenstersturz</string>
+</resources>
