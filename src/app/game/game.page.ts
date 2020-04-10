@@ -30,7 +30,7 @@ export class GamePage implements OnInit {
   currentTeam: number = 1;
 
   partys: party[];
-  wordsSave: any = require('../../assets/json/wordstest.json');
+  wordsSave: any;
   words: words = null;
   skipCounter: number = 0;
 
@@ -42,6 +42,8 @@ export class GamePage implements OnInit {
   constructor(private alertCtrl: AlertController, private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
       this.settings = this.router.getCurrentNavigation().extras.state.settings;
+
+      this.wordsSave = require('../../assets/json/words/' + this.settings.words + '.json');
       this.partys = new Array(this.settings.partynumber);
       for(let i:number = 0; i < this.partys.length; i++){
         this.partys[i] = {teamNumber:i, points:0};
@@ -54,6 +56,7 @@ export class GamePage implements OnInit {
   }
 
   gotoHome(){
+    this.time = -1;
     this.router.navigate(["home"], {state: {settings: this.settings}});
   }
 
@@ -105,6 +108,8 @@ export class GamePage implements OnInit {
   }
 
   correct(){
+    var correctAudio = new Audio("../../assets/audio/correct.mp3");
+    correctAudio.play();
     this.partys[this.currentTeam-1].points++;
     this.newCombination(this.randomNumber(0,2));
   }
