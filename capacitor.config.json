@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "App",
+  "appId": "hollenbeck.jonathan.fenstersturz",
+  "appName": "Fenstersturz",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
