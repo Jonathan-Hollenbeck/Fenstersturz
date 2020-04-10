@@ -18,7 +18,7 @@ export interface Settings{
 
 export class SettingsPage implements OnInit {
 
-  settings: Settings = {time: 60, partynumber: 2, rerolls: 1, maxRounds: -1, words: 'wordstest'};
+  settings: Settings = {time: 60, partynumber: 2, rerolls: 1, maxRounds: -1, words: 'deutsch'};
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
